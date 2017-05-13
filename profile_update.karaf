@@ -1,8 +1,5 @@
-# returns true if it has not param, else otherwise
-empty = { if {"" equals ("" valueof "$1") } {true} {false} }
-
 profile-not-exists = { 
-  (empty (profile-display $2 | tac)) 
+  (((profile-display $2) | tac ) isEmpty) 
 }
     
 # Upgrade version, hold this in a variable
