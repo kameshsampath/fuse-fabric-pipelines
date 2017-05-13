@@ -19,5 +19,9 @@ profile_update = {
     container-add-profile $1 $2 
     newVersion = ((get_version | tac) tostring)
     echo "";
-    echo "Container $1 with Profile $2 will be upgraded to Version: $newVersion"  
+    echo "Upgrading Container $1 with Profile $2 to Version: $newVersion"
+    echo "";
+    profile-edit --bundle $3 $profileName $newVersion            
+    echo "";
+    container-upgrade $newVersion $1 
 }

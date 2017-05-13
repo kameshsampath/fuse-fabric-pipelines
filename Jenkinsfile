@@ -13,7 +13,7 @@ node {
         def exec = """
           ssh -o StrictHostKeyChecking=no -p 8101 -l karaf localhost
           source 'http://localhost:3000/gogsadmin/fabric8-pipeline-checks/raw/master/profile_update.karaf'
-          profile_update $containerName $profileName
+          profile_update $containerName $profileName $bundleInfo
         """
         sh exec
        }
