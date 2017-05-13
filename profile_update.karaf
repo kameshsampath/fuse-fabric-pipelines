@@ -1,5 +1,5 @@
 # returns true if it has not param, else otherwise
-empty = { if {"" equals ("" valueof "$1") } {true} {false} 
+empty = { if {"" equals ("" valueof "$1") } {true} {false} }
 
 profile-not-exists = { 
   (empty (profile-display $2 | tac)) 
@@ -13,8 +13,7 @@ get_version = {
 }
 
 profile_update = {
-  
-  if { profile-not-exists } { 
+   if { profile-not-exists } { 
         echo "";
         echo "Creating Profile $2";
         profile-create --parents feature-camel $2
