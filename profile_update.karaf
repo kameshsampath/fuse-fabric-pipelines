@@ -1,15 +1,15 @@
 profile-not-exists = { 
-          ((profile-display $PROFILE_NAME | tac) isEmpty) 
+          ((profile-display $2 | tac) isEmpty) 
         }
 
 if {profile-not-exists } { 
         echo "";
-        echo "Creating Profile $PROFILE_NAME";
-        (profile-create --parents feature-camel $PROFILE_NAME | tac)
+        echo "Creating Profile $2";
+        (profile-create --parents feature-camel $2 | tac)
     } { }
     
 # set profile to container
-container-add-profile $containerName $PROFILE_NAME
+container-add-profile $1 $2
   
 # Upgrade version, hold this in a variable
 get_version = {
@@ -20,5 +20,5 @@ get_version = {
 
 profile_update = {
   _v = get_version
-   echo "Contianer $CONTAINER_NAME with Profile $PROFILE_NAME will be upgraded to Version: $_v"
+   echo "Contianer $1 with Profile $2 will be upgraded to Version: $_v"
 }

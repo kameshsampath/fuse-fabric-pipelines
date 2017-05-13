@@ -10,16 +10,12 @@ node {
     
     stage('Fabric Deploy') {
         sshagent (credentials: ['fabric8-dev']) {
-         def stdOut =  sh(script:"""
-            ssh -o StrictHostKeyChecking=no -p 8101 -l karaf localhost <<EOF
-            CONTAINER_NAME =  $containerName
-            PROFILE_NAME = $profileName
-            source http://localhost:3000/gogsadmin/fabric8-pipeline-checks/raw/master/profile_update.karaf 
-            profile_update
-            'EOF'
-        """,returnStdOut: true)
-        
-        println stdOut
+        def exec = """
+          ssh -o StrictHostKeyChecking=no -p 8101 -l karaf localhost
+          source http://localhost:3000/gogsadmin/fabric8-pipeline-checks/raw/master/profile_update.karaf 
+          profile_update $containerName $profileName
+        """
+        sh exec
        }
     }
     
