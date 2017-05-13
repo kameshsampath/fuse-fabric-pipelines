@@ -1,3 +1,9 @@
+def sh = { cmd ->
+  wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+    sh cmd
+  }
+}
+
 node {
     
     // other project stages will come here 
