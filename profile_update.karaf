@@ -1,5 +1,5 @@
 profile-not-exists = { 
-  (((profile-display $2) | tac ) isEmpty) 
+  (((profile-display $args) | tac ) isEmpty) 
 }
     
 # Upgrade version, hold this in a variable
@@ -10,7 +10,7 @@ get_version = {
 }
 
 profile_update = {
-   if { profile-not-exists } { 
+   if { (profile-not-exists $2) } { 
         echo "";
         echo "Creating Profile $2";
         profile-create --parents feature-camel $2
