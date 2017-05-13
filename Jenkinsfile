@@ -6,7 +6,7 @@ node {
     def containerName = "child07" 
     def profileName = "demo-camel"
     // this need to computed and retrieved from the release util scripts
-    def bundleInfo = "mvn:org.workspace7.fuse/camel-jenkins-demo:1.0.1"
+    def bundleInfo = "mvn:org.workspace7.fuse/camel-jenkins-demo/1.0.1"
     
     stage('Fabric Deploy') {
         sshagent (credentials: ['fabric8-dev']) {
