@@ -1,9 +1,3 @@
-def sh = { cmd ->
-  wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-    sh cmd
-  }
-}
-
 node {
     
     // other project stages will come here 
@@ -17,12 +11,19 @@ node {
     stage('Fabric Deploy') {
         sshagent (credentials: ['fabric8-dev']) {
         def exec = """
-          ssh -o StrictHostKeyChecking=no -p 8101 -l karaf localhost
-          source 'http://localhost:3000/gogsadmin/fabric8-pipeline-checks/raw/master/profile_update.karaf'
-          profile_update $containerName $profileName $bundleInfo
-        """
-        sh exec
+ssh -o StrictHostKeyChecking=no -p 8101 -l karaf localhost << 'EOF'
+source 'http://localhost:3000/gogsadmin/fabric8-pipeline-checks/raw/master/profile_update.karaf'
+profile_update $containerName $profileName $bundleInfo
+EOF"""
+       wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+           def fout  = sh script: exec, returnStdout: true
+           println fout
+           
+           if(fout.contains("Error")) {
+              currentBuild.result = 'FAIL'
+           }
        }
+     }
     }
     
 }
