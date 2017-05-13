@@ -9,6 +9,7 @@ get_version = {
     (($arr 2) tostring)
 }
 
+# bunch of commands to do profile and container upgrade
 profile_update = {
    if { (profile-not-exists $2) } { 
         echo "";
@@ -16,7 +17,7 @@ profile_update = {
         profile-create --parents feature-camel $2
     } { }
     container-add-profile $1 $2 
-    _v = { get_version }
+    newVersion = ((get_version | tac) tostring)
     echo "";
-    echo "Container $1 with Profile $2 will be upgraded to Version: $_v"  
+    echo "Container $1 with Profile $2 will be upgraded to Version: $newVersion"  
 }
