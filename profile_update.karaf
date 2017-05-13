@@ -1,12 +1,6 @@
 profile-not-exists = { 
           ((profile-display $2 | tac) isEmpty) 
-        }
-
-if {profile-not-exists } { 
-        echo "";
-        echo "Creating Profile $2";
-        (profile-create --parents feature-camel $2 | tac)
-    } { }
+}
     
 # Upgrade version, hold this in a variable
 get_version = {
@@ -16,10 +10,13 @@ get_version = {
 }
 
 profile_update = {
-   # set profile to container
-   if { $1 isEmpty } {} {
-     container-add-profile $1 $2
-    _v = get_version
-     echo "Contianer $1 with Profile $2 will be upgraded to Version: $_v"
-   }
+  if {profile-not-exists } { 
+        echo "";
+        echo "Creating Profile $2";
+        (profile-create --parents feature-camel $2 | tac)
+    } { }
+  ( container-add-profile $1 $2 | tac )
+  _v = get_version
+  echo "";
+  echo "Contianer $1 with Profile $2 will be upgraded to Version: $_v"
 }
