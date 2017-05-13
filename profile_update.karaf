@@ -16,7 +16,7 @@ profile_update = {
         profile-create --parents feature-camel $2
     } { }
     container-add-profile $1 $2 
-    _v = (get_version | tac)
+    _v = { get_version }
     echo "";
     echo "Container $1 with Profile $2 will be upgraded to Version: $_v"  
 }
