@@ -14,7 +14,7 @@ profile_update = {
    if { (profile-not-exists $2) } { 
         echo "";
         echo "Creating Profile $2";
-        profile-create --parents feature-camel $2
+        profile-create --parents jboss-fuse-full $2
     } { }
     container-add-profile $1 $2 
     newVersion = ((get_version | tac) tostring)
