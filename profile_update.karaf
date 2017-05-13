@@ -17,7 +17,9 @@ get_version = {
 
 profile_update = {
    # set profile to container
-   container-add-profile $1 $2
-  _v = get_version
-   echo "Contianer $1 with Profile $2 will be upgraded to Version: $_v"
+   if { $1 isEmpty } {} {
+     container-add-profile $1 $2
+    _v = get_version
+     echo "Contianer $1 with Profile $2 will be upgraded to Version: $_v"
+   }
 }
