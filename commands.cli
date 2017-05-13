@@ -1,14 +1,2 @@
-profile-not-exists = { 
-  ((profile-display $1 | tac) isEmpty) 
-}
-
-check-profile = {
-  if { profile-not-exists $1 } {
-    echo "Profile $1 does not exist"
-  } {
-    echo "Profile $1 exists"
-  }
-}
-
-check-profile foo
-check-profile insight-core
+#!/bin/bash
+ssh -o StrictHostKeyChecking=no -p 8101 -l karaf localhost 
