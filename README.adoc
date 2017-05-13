@@ -1,0 +1,4 @@
+= Fuse fabric pipelines
+A simple demo that demonstratates how to use Jenkins with JBoss Fuse.  The Jenkinsfile in this project shows how to define a pipeline stage that will invoke the script profile_update.karaf to perform some Karaf shell commmands
+
+== profile_update.karaf
