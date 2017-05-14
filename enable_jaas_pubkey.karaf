@@ -11,7 +11,7 @@ import_resource = {
   
  _fabricServiceRef = $.context getServiceReference "io.fabric8.api.FabricService"
  
- _fabricService = $.context getService $_sref
+ _fabricService = $.context getService $_fabricServiceRef
  
  _fabricDataStore = $_fabricService getdatastore
 
