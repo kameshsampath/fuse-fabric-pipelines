@@ -1,4 +1,31 @@
-= Fuse fabric pipelines
-A simple demo that demonstratates how to use Jenkins with JBoss Fuse.  The Jenkinsfile in this project shows how to define a pipeline stage that will invoke the script profile_update.karaf to perform some Karaf shell commmands
+= JBoss Fuse fabric Jenkins Pipelines
 
-== profile_update.karaf
+This repository has sample karaf scripts that helps in automating the application deployment on https://www.redhat.com/en/technologies/jboss-middleware/fuse[JBoss Fuse] using https://jenkins-ci.org[Jenkins] pipelines
+
+[NOTE]
+====
+* Tested on JBoss Fuse 6.2.1
+* This demo script allows only adding one bundle during profile upgrade
+====
+
+== Enable Fuse JAAS PublicKeyLoginModule
+
+For making Jenkins talk to https://www.redhat.com/en/technologies/jboss-middleware/fuse[JBoss Fuse], we need to have https://www.redhat.com/en/technologies/jboss-middleware/fuse[JBoss Fuse] enabled for Public Key based SSH login.
+
+The link:./enable_jaas_pubkey.karaf[enable_jaas_pubkey.karaf] is used to enable the Public Key Login Module by adding `fabric_jaas_publickey.xml` blueprint resource to "*fabric*" profile "*1.0*".  This module uses the  `users + public key` combination available in `${karaf.base}/etc/keys.properties`
+
+To enable PublicKeyLoginModule in your fuse instance, login in to your Fuse Karaf console and run,
+
+[source,sh]
+
+JBossFuse:admin@root> source https://raw.githubusercontent.com/kameshsampath/fuse-fabric-pipelines/master/enable_jaas_pubkey.karaf
+
+== Profile update
+
+The link:./profile_update.karaf[profile_update.karaf] script will be used by Jenkins job(s) to perform the following tasks:
+
+* checks for the profile with name from parameter(`$2`), if it does not exist it will create the profile
+* creates new version of the profile with name from parameter(`$2`)
+* it will add the bundle the parameter(`$3`) to the profile with name from parameter(`$2`)
+* upgrade the container name passed as parameter(`$1`) to use the new version of the profile
+* finally does a profile refresh of the new version
