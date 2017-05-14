@@ -1,0 +1,22 @@
+# Script to enable JAAS PublicKeyLoginModule for fabric containers
+# add ssh'ble user's public RSA key under ${karaf.base}/keys.properties
+
+# this method will import the jaas_blueprint.xml form github and add it as a resource
+# under fabric profile 
+# NOTE: in this demo snippet this will be added to "fabric" profile version 1.0,
+# an imporve could be to version the profile add resource and set that as default version
+import_resource = {
+ 
+ _bluprint_jaas_resource_xml = (cat https://raw.githubusercontent.com/kameshsampath/fuse-fabric-pipelines/master/fabric_jaas_publickey.xml | tac)
+  
+ _fabricServiceRef = $.context getServiceReference "io.fabric8.api.FabricService"
+ 
+ _fabricService = $.context getService $_sref
+ 
+ _fabricDataStore = $_fabricService getdatastore
+
+ $_fabricDataStore setFileConfiguration 1.0 fabric jaas_blueprint_with_publickey.xml ($_bluprint_jaas_resource_xml getbytes)
+}
+
+import_resource
+profile-edit --bundle blueprint:profile:fabric_jaas_publickey.xml fabric
