@@ -13,7 +13,7 @@ import_resource = {
  
  _fabricService = $.context getService $_fabricServiceRef
  
- _fabricDataStore = $_fabricService.getdatastore
+ _fabricDataStore = $_fabricService getDatastore
 
  $_fabricDataStore setFileConfiguration 1.0 fabric jaas_blueprint_with_publickey.xml ($_bluprint_jaas_resource_xml getbytes)
 }
