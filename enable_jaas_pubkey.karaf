@@ -6,25 +6,24 @@ import_resource = {
   _profile = $1
   _version = $2
   _logical_file_path = $3
-  _physical_file_path = $4 
 
-  _file_content = ((cat _physical_file_path)  | tac)
+  _file_content = ((cat $4)  | tac)
   
   _sref = $.context getServiceReference "io.fabric8.git.GitDataStore"
   _dstore = $.context getService $_sref
 
   _dstore_class = $_dstore class
-  _dstore_method = $_dstore_class getdeclaredmethod newGitWriteContext
+  _dstore_method = $_dstore_class getdeclaredmethod newGitWriteContext "java.lang.String"
   $_dstore_method setAccessible true
 
-  _git_context = $_dstore_method invoke _dstore
+  _git_context = $_dstore_method invoke $_dstore $_version
   _fabric_core_id = (id io.fabric8.fabric-core)
 
-  _profile_builder_class - (($.context bundle _fabric_core_id) loadclass io.fabric8.internal.DefaultProfileBuilders)
+  _profile_builder_class = (($.context bundle $_fabric_core_id) loadclass io.fabric8.internal.DefaultProfileBuilders)
   _profile_builder_instance = $_profile_builder_class newInstance
 
   _profile_service_ref = $.context getServiceReference "io.fabric8.api.ProfileService"
-  _profile_service =  $.context getService _profile_service_ref
+  _profile_service =  $.context getService $_profile_service_ref
 
   _current_profile = $_profile_service getProfile $_version $_profile
 
@@ -35,6 +34,6 @@ import_resource = {
   $_dstore updateProfile $_git_context $profile true 
 }
 
-import_resource "fabric" "1.0" "fabric_jaas_publickey" https://raw.githubusercontent.com/kameshsampath/fuse-fabric-pipelines/master/fabric_jaas_publickey.xml
+import_resource "fabric" "1.0" "fabric_jaas_publickey" "https://raw.githubusercontent.com/kameshsampath/fuse-fabric-pipelines/master/fabric_jaas_publickey.xml"
 
 profile-edit --bundle blueprint:profile:fabric_jaas_publickey fabric
