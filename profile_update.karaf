@@ -23,7 +23,5 @@ profile_update = {
     echo "";
     profile-edit --bundle $3 $2 $newVersion            
     echo "";
-    container-upgrade $newVersion $1 
-    echo "";
-    profile-refresh $2 $newVersion  
+    container-upgrade $newVersion $1
 }
