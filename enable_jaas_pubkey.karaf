@@ -8,9 +8,9 @@ import_resource = {
   _logical_file_path = $3
   _physical_file_path = $4 
 
-  _file_content = ((cat _physical_file_path  | tac))
+  _file_content = ((cat _physical_file_path)  | tac)
   
-  _sref = $.context.getServiceReference "io.fabric8.git.GitDataStore"
+  _sref = $.context getServiceReference "io.fabric8.git.GitDataStore"
   _dstore = $.context getService $_sref
 
   _dstore_class = $_dstore class
