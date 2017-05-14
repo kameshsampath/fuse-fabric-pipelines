@@ -35,6 +35,6 @@ import_resource = {
   $_dstore updateProfile $_git_context $profile true 
 }
 
-import_resource "fabric" "1.0" "fabric_jaas_publickey" "https://raw.githubusercontent.com/kameshsampath/fuse-fabric-pipelines/master/fabric_jaas_publickey.xml"
+import_resource "fabric" "1.0" "fabric_jaas_publickey" https://raw.githubusercontent.com/kameshsampath/fuse-fabric-pipelines/master/fabric_jaas_publickey.xml
 
 profile-edit --bundle blueprint:profile:fabric_jaas_publickey fabric
