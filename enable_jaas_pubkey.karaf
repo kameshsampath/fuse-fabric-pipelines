@@ -7,13 +7,13 @@
 # an imporve could be to version the profile add resource and set that as default version
 import_resource = {
  
- _bluprint_jaas_resource_xml = (cat https://raw.githubusercontent.com/kameshsampath/fuse-fabric-pipelines/master/fabric_jaas_publickey.xml | tac)
+ _bluprint_jaas_resource_xml = ((cat https://raw.githubusercontent.com/kameshsampath/fuse-fabric-pipelines/master/fabric_jaas_publickey.xml | tac))
   
  _fabricServiceRef = $.context getServiceReference "io.fabric8.api.FabricService"
  
  _fabricService = $.context getService $_fabricServiceRef
  
- _fabricDataStore = $_fabricService getdatastore
+ _fabricDataStore = $_fabricService.getdatastore
 
  $_fabricDataStore setFileConfiguration 1.0 fabric jaas_blueprint_with_publickey.xml ($_bluprint_jaas_resource_xml getbytes)
 }
